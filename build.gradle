@@ -1,3 +1,7 @@
+plugins {
+    id 'org.hidetake.ssh' version '2.8.0'
+}
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
@@ -12,3 +16,34 @@ dependencies {
     testImplementation 'junit:junit:4.12'
 }
 
+mainClassName="controller.Main"
+
+applicationDefaultJvmArgs = ["-Xmx30g"]
+
+applicationDistribution.from("seeds") {
+    into "bin/seeds"
+}
+
+ssh.settings {
+    dryRun = project.hasProperty('dryRun')
+}
+
+remotes {
+    server {
+        host = '10.10.4.10'
+        user = 'farshad'
+        identity = file("${System.properties['user.home']}/.ssh/id_rsa")
+    }
+}
+
+task deploy(dependsOn: installDist) << {
+    ssh.run {
+        session(remotes.server) {
+         	execute 'rm -rf ./java/CategoryTreeGeneration'
+            put from: './build/install/CategoryTreeGeneration', into: './java/'
+            execute 'chmod +x ./java/CategoryTreeGeneration/bin/CategoryTreeGeneration'
+            execute 'cd ./java/CategoryTreeGeneration/bin && ./CategoryTreeGeneration /home/farshad/java/categoryData/skos_categories_en.ttl 5'
+            get from: './java/CategoryTreeGeneration/bin/result', into: '.'           
+        }
+    }
+}
