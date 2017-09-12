@@ -24,7 +24,9 @@ public class CategoryTree {
 	}
 
 	public void addSubClass(String s,int count) {
-		subclasses.put(s,count);
+		if(!subclasses.containsKey(s)) {
+			subclasses.put(s,count);
+		}
 	}
 
 	public void writeToFile() {
