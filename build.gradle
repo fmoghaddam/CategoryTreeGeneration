@@ -42,7 +42,7 @@ task deploy(dependsOn: installDist) << {
          	execute 'rm -rf ./java/CategoryTreeGeneration'
             put from: './build/install/CategoryTreeGeneration', into: './java/'
             execute 'chmod +x ./java/CategoryTreeGeneration/bin/CategoryTreeGeneration'
-            execute 'cd ./java/CategoryTreeGeneration/bin && ./CategoryTreeGeneration /home/farshad/java/categoryData/skos_categories_en.ttl 5'
+            execute 'cd ./java/CategoryTreeGeneration/bin && ./CategoryTreeGeneration /home/farshad/java/categoryData/skos_categories_en.ttl 7'
             get from: './java/CategoryTreeGeneration/bin/result', into: '.'           
         }
     }
