@@ -51,6 +51,13 @@ public class CategoryTreeGenerator {
 			catTree.addSubClass(pop,currentDepth);
 			final Set<String> set = FastLookUpSubjectObject.getFastlookUpSubjectObjects().get(pop);
 			if(set==null) {
+				if (--elementsToDepthIncrease == 0) {
+					if (++currentDepth > treeDepth) {
+						break;
+					}
+					elementsToDepthIncrease = nextElementsToDepthIncrease;
+					nextElementsToDepthIncrease = 0;
+				}
 				continue;
 			}
 			nextElementsToDepthIncrease += set.size();
