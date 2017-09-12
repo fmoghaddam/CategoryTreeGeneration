@@ -13,6 +13,7 @@ public class CategorySeedLoaderDummy extends CategorySeedloader {
 	public void loadSeeds() {
 		final List<String> dummySeeds = Arrays.asList("Chief_executive_officers", "Heads_of_state",
 				"Chancellors_(government)", "Popes", "Monarchy");
+//		final List<String> dummySeeds = Arrays.asList("Monarchy");
 		for (String s : dummySeeds) {
 			getSeeds().add(s);
 		}

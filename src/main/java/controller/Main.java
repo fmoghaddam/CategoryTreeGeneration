@@ -20,20 +20,21 @@ public class Main {
 		TREE_DEPTH = Integer.parseInt(args[1]);
 		
 		final CategorySeedloader seedLoader = new CategorySeedLoaderFileBased(SEED_FILE);
+//		final CategorySeedloader seedLoader = new CategorySeedLoaderDummy();
 		seedLoader.loadSeeds();
 		
 		final CategoryFileParser fileParser = new CategoryFileParser(CATEGORY_FILE);
 		long now = System.currentTimeMillis();
 		fileParser.parse();
-		System.err.println("Reading "+TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-now));
+		System.err.println("Reading "+TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-now)+" seconds");
 		
 		now = System.currentTimeMillis();
 		new FastLookUpSubjectObject(ListOfSubjectObject.getListOfSubjectObjects()); 
-		System.err.println("Speedup "+TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-now));
+		System.err.println("Speedup "+TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-now)+" seconds");
 
 		now = System.currentTimeMillis();
 		new CategoryTreeGenerator(seedLoader.getSeeds(), TREE_DEPTH).printTreesToFile(); 
-		System.err.println("Generating Trees "+TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-now));
+		System.err.println("Generating Trees "+TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-now)+" seconds");
 	}
 
 }
